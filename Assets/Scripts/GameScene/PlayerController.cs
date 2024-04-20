@@ -20,11 +20,17 @@ public class PlayerController : MonoBehaviour
 
     private int _health = 3;
 
-    public int Health { get => _health; set => _health = value; }
+    private int _maxHealth = 3;
 
-    private bool _isShieldActive = false;
+    private int _score = 0;
 
-    public bool IsShieldActive { get => _isShieldActive; set => _isShieldActive = value; }
+    private bool _isShielBonusdActive = false;
+
+    private bool _isScoreBonusActive = false;
+
+    public bool IsShieldBonusActive { get => _isShielBonusdActive; set => _isShielBonusdActive = value; }
+
+    public bool IsScoreBonusActive { get => _isScoreBonusActive; set => _isScoreBonusActive = value; }
 
     private bool _isCanMove = true;
 
@@ -44,13 +50,19 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnScoreBonus = new UnityEvent();
 
     [HideInInspector]
-    public UnityEvent<bool> OnRepair = new UnityEvent<bool>();
+    public UnityEvent OnRepair = new UnityEvent();
 
     [HideInInspector]
     public UnityEvent OnFinish = new UnityEvent();
 
+    [HideInInspector]
+    public UnityEvent<int, int> OnHealthChange = new UnityEvent<int, int>();
+
+    [HideInInspector]
+    public UnityEvent<int> OnScoreChange = new UnityEvent<int>();
+
     [SerializeField]
-    [Tooltip(" 0 -> Health bonus \n 1 -> Shield bonus \n 2 -> Score bonus \n 3 -> Repair engine \n 4 -> Finish zone")]
+    [Tooltip(" 0 -> Health bonus \n 1 -> Shield bonus \n 2 -> Score bonus \n 3 -> Finish zone \n 4 -> Heal \n 5 -> Point ")]
     private List<LayerMask> _activityLayers = new List<LayerMask>();
 
     private void Awake()
@@ -71,7 +83,7 @@ public class PlayerController : MonoBehaviour
         dangerZoneControllers = FindObjectsOfType<DangerZoneController>().ToList();
         foreach (var zone in dangerZoneControllers)
         {
-            zone.OnDangerZone.AddListener(Damage);
+            zone.OnDangerZone.AddListener(DecreaseHealth);
         }
     }
 
@@ -115,13 +127,43 @@ public class PlayerController : MonoBehaviour
         _rb.velocity *= Vector2.up;
     }
 
-    private void Damage()
+    private void DecreaseHealth()
     {
-        if (!_isShieldActive)
+        if (!_isShielBonusdActive)
         {
             _health--;
+            OnHealthChange.Invoke(_health, _maxHealth);
             Debug.Log("Damage");
         }
+    }
+
+    private void IncreaseHealth()
+    {
+        _health++;
+        OnHealthChange.Invoke(_health, _maxHealth);
+        Debug.Log("Heal");
+    }
+
+    public void MaxHealthIncrease()
+    {
+        _health++;
+        _maxHealth++;
+        OnHealthChange.Invoke(_health, _maxHealth);
+    }
+
+    private void IncreasePoints()
+    {
+        if (!_isScoreBonusActive)
+            _score++;
+        else
+            _score += 2;
+
+        OnScoreChange.Invoke(_score);
+    }
+
+    public void RepairEngine()
+    {
+        OnRepair.Invoke();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -148,30 +190,42 @@ public class PlayerController : MonoBehaviour
                 OnScoreBonus.Invoke();
                 Destroy(collision.gameObject);
             }
-            // Engine repair
-            else if (_activityLayers[3] == (1 << collisionLayer))
-            {
-                OnRepair.Invoke(true);
-            }
+            //// Engine repair
+            //else if (_activityLayers[3] == (1 << collisionLayer))
+            //{
+            //    OnRepair.Invoke(true);
+            //}
             // Finish
-            else if (_activityLayers[4] == (1 << collisionLayer))
+            else if (_activityLayers[3] == (1 << collisionLayer))
             {
                 OnFinish.Invoke();
             }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision != null)
-        {
-            int collisionLayer = collision.gameObject.layer;
-
-            // Engine repair left
-            if (_activityLayers[3] == (1 << collisionLayer))
+            // Heal
+            else if (_activityLayers[4] == (1 << collisionLayer))
             {
-                OnRepair.Invoke(false);
+                IncreaseHealth();
+                Destroy(collision.gameObject);
+            }
+            // Point
+            else if (_activityLayers[5] == (1 << collisionLayer))
+            {
+                IncreasePoints();
+                Destroy(collision.gameObject);
             }
         }
     }
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision != null)
+    //    {
+    //        int collisionLayer = collision.gameObject.layer;
+
+    //        Engine repair left
+    //        if (_activityLayers[3] == (1 << collisionLayer))
+    //        {
+    //            OnRepair.Invoke(false);
+    //        }
+    //    }
+    //}
 }

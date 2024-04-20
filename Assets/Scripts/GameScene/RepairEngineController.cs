@@ -4,31 +4,16 @@ using UnityEngine;
 
 public class RepairEngineController : MonoBehaviour
 {
+    [SerializeField]
+    protected LayerMask _playerMask;
 
-    [SerializeField] private PlayerController _player;
+    private PlayerController _playerController;
 
     private bool _isRepairing = false;
 
     private bool _isCanRepair = false;
 
     private float _repairTime = 3f;
-
-    private void Awake()
-    {
-        _player.OnRepair.AddListener(OnRepair);
-    }
-
-    private void OnRepair(bool isRepair)
-    {
-        if (isRepair)
-        {
-            _isCanRepair = true;
-        }
-        else
-        {
-            _isCanRepair = false;
-        }
-    }
 
     private IEnumerator RepairEngineCoroutine()
     {
@@ -50,6 +35,41 @@ public class RepairEngineController : MonoBehaviour
 
     private void Repair()
     {
+        StartCoroutine(RepairEngineCoroutine());
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            int collisionLayer = collision.gameObject.layer;
+
+            if (_playerMask == (1 << collisionLayer))
+            {
+                _isCanRepair = true;
+                
+                if (_playerController == null)
+                    _playerController = FindObjectOfType<PlayerController>();
+
+                if (_playerController != null)
+                    _playerController.OnRepair.AddListener(Repair);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            int collisionLayer = collision.gameObject.layer;
+
+            if (_playerMask == (1 << collisionLayer))
+            {
+                _isCanRepair = false;
+
+                if (_playerController != null)
+                    _playerController.OnRepair.RemoveListener(Repair);
+            }
+        }
     }
 }
