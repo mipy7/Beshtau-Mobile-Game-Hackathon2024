@@ -17,6 +17,11 @@ public class DangerZoneController : MonoBehaviour
     [HideInInspector]
     public UnityEvent OnDangerZone = new UnityEvent();
 
+    protected void Start()
+    {
+        _player = FindObjectOfType<PlayerController>();
+    }
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision != null)
@@ -39,7 +44,6 @@ public class DangerZoneController : MonoBehaviour
         }
         else
         {
-
         }
     }
 }

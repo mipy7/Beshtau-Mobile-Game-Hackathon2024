@@ -34,7 +34,7 @@ public class BonusesController : MonoBehaviour
 
     private void HealthBonusCollected()
     {
-        _player.MaxHealthIncrease();
+        _player.Health++;
         //_healthPanelController
     }
 
@@ -45,32 +45,19 @@ public class BonusesController : MonoBehaviour
 
     private void ScoreBonusCollected()
     {
-        StartCoroutine(ScoreCoroutine());
+
     }
 
     private IEnumerator ShieldCoroutine()
     {
-        Debug.Log("Shield Bonus Activated");
+        Debug.Log("Shield Activated");
         
-        _player.IsShieldBonusActive = true;
+        _player.IsShieldActive = true;
 
         yield return new WaitForSeconds(_timer);
 
-        _player.IsShieldBonusActive = false;
+        _player.IsShieldActive = false;
         
-        Debug.Log("Shield Bonus Deactivated");
-    }
-
-    private IEnumerator ScoreCoroutine()
-    {
-        Debug.Log("Score Bonus Activated");
-
-        _player.IsScoreBonusActive = true;
-
-        yield return new WaitForSeconds(_timer);
-
-        _player.IsScoreBonusActive = false;
-
-        Debug.Log("Score Bonus Deactivated");
+        Debug.Log("Shield Deactivated");
     }
 }
