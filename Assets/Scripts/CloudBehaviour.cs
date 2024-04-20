@@ -1,19 +1,18 @@
 using System;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CloudBehaviour : MonoBehaviour
 {
 	private float speed;
-	private bool flipX;
 	private float opacity;
 	private Vector2 spawnPos;
 	private float scale;
 
 	private Rigidbody2D _rb;
-
-	private SpriteRenderer _sprite;
+	private Image _image;
 
 	// Start is called before the first frame update
 	void Start()
@@ -24,25 +23,25 @@ public class CloudBehaviour : MonoBehaviour
 		}
 		else
 		{
-			new NullReferenceException("Check Player RigidBody!");
+			new NullReferenceException("Check Cloud RigidBody!");
 		}
 
-		if (TryGetComponent(out SpriteRenderer sprite))
+		if (TryGetComponent(out Image image))
 		{
-			_sprite = sprite;
+			_image = image;
 		}
 		else
 		{
-			new NullReferenceException("Check Player RigidBody!");
+			new NullReferenceException("Check Cloud Image!");
 		}
-		
+
 		ResetScript();
 	}
 
     // Update is called once per frame
     void Update()
     {
-		float resetPosX = -(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x + _sprite.bounds.size.x);
+		float resetPosX = -(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x + _image.sprite.bounds.size.x);
 		if (transform.position.x < resetPosX)
 		{
 			ResetScript();
@@ -54,17 +53,16 @@ public class CloudBehaviour : MonoBehaviour
 		InitializeField();
 		_rb.velocity = Vector2.left * speed;
 		transform.position = spawnPos;
-		_sprite.flipX = flipX;
-		_sprite.color = new Color(_sprite.color.r, _sprite.color.g, _sprite.color.b, opacity);
+		_image.color = new Color(_image.color.r, _image.color.g, _image.color.b, opacity);
 		transform.localScale = Vector3.one * scale;
+		transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
 	}
 
 	private void InitializeField()
 	{
 		speed = Random.Range(0.2f, 1.5f);
-		flipX = Random.Range(0f, 10f) > 5;
 		opacity = Random.Range(0.5f, 1f);
-		spawnPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)) + new Vector3( _sprite.bounds.size.x + Random.Range(0f, 10f), -Random.Range(1f, 3f), 0);
-		scale = Random.Range(0.8f, 1f);
+		spawnPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)) + new Vector3(_image.sprite.bounds.size.x + Random.Range(0f, 10f), -Random.Range(1f, 3f), 0);
+		scale = Random.Range(0.2f, 0.4f);
 	}
 }
