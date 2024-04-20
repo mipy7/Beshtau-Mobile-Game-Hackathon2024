@@ -14,7 +14,7 @@ public class CloudController : MonoBehaviour
     {
         for(int i = 0; i < cloudCount; i++)
         {
-            Instantiate(cloudPrefub);
+            Instantiate(cloudPrefub, transform);
         }
     }
 }
