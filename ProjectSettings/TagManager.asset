@@ -12,12 +12,12 @@ TagManager:
   - Water
   - UI
   - GameEnv
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Health
+  - Shield
+  - Score
+  - Repair
+  - Danger
+  - Finish
   - 
   - 
   - 
