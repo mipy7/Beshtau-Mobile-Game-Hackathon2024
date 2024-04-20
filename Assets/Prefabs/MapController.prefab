@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7885306079814621354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 489547615608754364}
+  - component: {fileID: 7849110383525929009}
+  m_Layer: 0
+  m_Name: MapController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &489547615608754364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885306079814621354}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.3819904, y: -4.254876, z: 16100.333}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7849110383525929009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885306079814621354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b01be685184e014e8b8f2afc60334fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ground1: {fileID: 901497490492057922, guid: aae5223b4e353c54c89a2d36cbc5a5ce, type: 3}
+  ground2: {fileID: 7648100938034158979, guid: 9abc6e2393004e0429a68ccdf430d6f8, type: 3}
+  ground3: {fileID: 4741592459753694860, guid: 753a1a220b040654892429676b37306e, type: 3}
+  ground4: {fileID: 234635215119698884, guid: 3214b55dd918daa48b6c180743e7fcaa, type: 3}
+  ground5: {fileID: 7499228946365973671, guid: 804ba5977443d354b80e3980b4e22925, type: 3}
+  barrier: {fileID: 6710475873055951630, guid: b54076b9fd1f6224a88215198232e393, type: 3}
+  shieldBonus: {fileID: 5504154288818887613, guid: b7022dafd5d7cab49b8b73678e46cbe7, type: 3}
+  healthBonus: {fileID: 7956651450118919907, guid: 708e71fd06a389741a104cac64c609cf, type: 3}
+  doubleBonus: {fileID: 3376298025938039331, guid: 0aad64391ac6b554c9d8ebd42fd5aa8e, type: 3}
+  dangerSpikes: {fileID: 7550302173931391513, guid: 472a0cbfd3981974ca85413b03b76364, type: 3}
+  dangerWire: {fileID: 7474715692284622564, guid: d0b00f3261bd52e428b2d8fd98db738e, type: 3}
+  dangerMovingSpikes: {fileID: 7849476336367299296, guid: 33dd4388a80b7c04195a89f57b7a7b6b, type: 3}
+  dangerArc: {fileID: 7796964358468336308, guid: e9511a47f801b8049bd5bf72d65a4b12, type: 3}
+  dangerTransformer: {fileID: 4120481283336826647, guid: bfeb49c37891cd949b1a8e3d876425c0, type: 3}
+  scoreCollect: {fileID: 6369610606695091916, guid: 5469052381505d34083e7bfab619edcf, type: 3}
+  lifeCollect: {fileID: 1340909523877829201, guid: dac960bc8a37c7645ba48d37a51b735b, type: 3}
+  workStation1: {fileID: 3322592630022352034, guid: 1577bb9719d72a44c956de98f58ddd83, type: 3}
+  workStation2: {fileID: 488184031743335966, guid: 32b4449fdb141bd4b86ff854590466eb, type: 3}
+  workStation3: {fileID: 3097784386158898928, guid: 1e423147665500c4691bcc3789afaf42, type: 3}
+  platform: {fileID: 1181310252070174783, guid: 5378c3d275b351c4593c9bf01bd9bc88, type: 3}
+  winFlag: {fileID: 4013971455866718471, guid: 5d0b6917a57fbb94ba903befac00f9d7, type: 3}
