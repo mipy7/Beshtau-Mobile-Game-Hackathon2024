@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ThemeChanger : MonoBehaviour
 {
+	[SerializeField]
+	private int maxThemes = 2;
+
 	private SpriteChangeBeehaviour[] themes;
 
 	private string _themeKey = "themeKey";
@@ -24,9 +27,11 @@ public class ThemeChanger : MonoBehaviour
 	{
 		themes = FindObjectsOfType<SpriteChangeBeehaviour>();
 
-		if (PlayerPrefs.GetInt(_themeKey, 0) == 0)
+		int themeCount = PlayerPrefs.GetInt(_themeKey, 0);
+
+		if (themeCount < maxThemes - 1)
 		{
-			PlayerPrefs.SetInt(_themeKey, 1);
+			PlayerPrefs.SetInt(_themeKey, themeCount + 1);
 		}
 		else
 		{

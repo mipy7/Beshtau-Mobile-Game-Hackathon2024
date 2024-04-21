@@ -9,7 +9,7 @@ public class CameraBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (_player.transform.position.x > 5f && _player.transform.position.x < 265f)
+        if (_player.transform.position.x > 2f && _player.transform.position.x < 265f)
             transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y, transform.position.z);
     }
 }

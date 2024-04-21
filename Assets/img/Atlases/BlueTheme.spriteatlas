@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BlueTheme
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    - serializedVersion: 3
+      m_BuildTarget: WebGL
+      m_MaxTextureSize: 512
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 50
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 1
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+      enableAlphaDilation: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 1230e872746727743b8a04d503daef1c, type: 3}
+    - {fileID: 2800000, guid: 6f2bec76469692d4eb0b4a39b560f673, type: 3}
+    - {fileID: 2800000, guid: b6172b2ac4c3c3d44b03010e221f1a09, type: 3}
+    - {fileID: 2800000, guid: 2fb6e2c8449b49944886cf2fa0a4d1a3, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 1230e872746727743b8a04d503daef1c: 21300000
+    - 6f2bec76469692d4eb0b4a39b560f673: 21300000
+    - 2fb6e2c8449b49944886cf2fa0a4d1a3: 21300000
+    - b6172b2ac4c3c3d44b03010e221f1a09: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 1230e872746727743b8a04d503daef1c, type: 3}
+  - {fileID: 21300000, guid: 6f2bec76469692d4eb0b4a39b560f673, type: 3}
+  - {fileID: 21300000, guid: 2fb6e2c8449b49944886cf2fa0a4d1a3, type: 3}
+  - {fileID: 21300000, guid: b6172b2ac4c3c3d44b03010e221f1a09, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Icon_Left_blue
+  - Icon_Right_blue
+  - Icon_Up_blue
+  - Icon_Settings_blue
+  m_RenderDataMap: {}
+  m_Tag: BlueTheme
+  m_IsVariant: 0
