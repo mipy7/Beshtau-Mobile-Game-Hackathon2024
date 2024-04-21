@@ -86,6 +86,13 @@
         container.className = "unity-mobile";
         canvas.className = "unity-mobile";
 
+        var lockFunction =  window.screen.orientation.lock;
+        if (lockFunction.call(window.screen.orientation, 'landscape')) {
+                   console.log('Orientation locked')
+        } else {
+                    console.error('There was a problem in locking the orientation')
+        }
+
         // To lower canvas resolution on mobile devices to gain some
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
