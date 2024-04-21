@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rb;
 
+    private CapsuleCollider2D _collider;
+
     [SerializeField] private float _speed = 100f;
 
     [SerializeField] private float _jumpDuration = 10f;
@@ -21,7 +23,11 @@ public class PlayerController : MonoBehaviour
 
     private int _maxHealth = 3;
 
+    private float _healthCooldownTime = 3f;
+
     private int _score = 0;
+
+    public int Score { get => _score; private set => _score = value; }
 
     private bool _isShielBonusdActive = false;
 
@@ -34,6 +40,8 @@ public class PlayerController : MonoBehaviour
     private bool _isCanMove = true;
 
     private bool _isJumping = false;
+
+    private bool _isCanTakeDamage = true;
 
     public float PlayerSpeed { get => _speed; private set => _speed = value; }
     public bool IsJumping { get => _isJumping; set => _isJumping = value; }
@@ -76,6 +84,15 @@ public class PlayerController : MonoBehaviour
         else
         {
             new NullReferenceException("Check Player RigidBody!");
+        }
+
+        if (TryGetComponent(out CapsuleCollider2D collider))
+        {
+            _collider = collider;
+        }
+        else
+        {
+            new NullReferenceException("Check Player Collider!");
         }
     }
 
@@ -129,12 +146,26 @@ public class PlayerController : MonoBehaviour
         _rb.velocity *= Vector2.up;
     }
 
+    private IEnumerator HealthCooldownCoroutine()
+    {
+        // set cooldown anim flag
+
+        _isCanTakeDamage = false;
+
+        yield return new WaitForSeconds(_healthCooldownTime);
+
+        // set cooldown anim flag
+
+        _isCanTakeDamage = true;
+    }
+
     private void DecreaseHealth()
     {
-        if (!_isShielBonusdActive)
+        if (!_isShielBonusdActive && _isCanTakeDamage)
         {
             _health--;
             OnHealthChange.Invoke(_health, _maxHealth);
+            StartCoroutine(HealthCooldownCoroutine());
             Debug.Log("Damage");
         }
 

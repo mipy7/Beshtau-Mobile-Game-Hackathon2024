@@ -106,7 +106,7 @@ public class MapCreationBehaviour : MonoBehaviour
 					case 'B': spawnObject = dangerSpikes; scale = 0.8f; shiftPos = new Vector3(0, -0.5f, 0); break;
 					case 'C': spawnObject = dangerWire; scale = 0.6f; shiftPos = new Vector3(0, -1.2f, 0); break;
 					case 'D': spawnObject = dangerMovingSpikes; scale = 0.7f; shiftPos = new Vector3(0, 0.7f, 0); break;
-					case 'E': spawnObject = dangerArc; shiftPos = new Vector3(0, -1.1f, 100f	); break;
+					case 'E': spawnObject = dangerArc; shiftPos = new Vector3(0, -1.1f, 0); break;
 					case 'F': spawnObject = dangerTransformer; scale = 0.45f; break;
 
 					case '*': spawnObject = scoreCollect; scale = 0.7f; shiftPos = new Vector3(0, -0.4f, 0); break;
