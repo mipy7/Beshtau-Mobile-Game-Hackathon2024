@@ -6,20 +6,20 @@ using UnityEngine;
 
 public class ChooseCharacterBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    private CharacterParams[] characters;
+	private readonly string _currentCharacterKey = "CharacterKey";
 
-	[SerializeField]
-	private TMP_Text nameField;
-	[SerializeField]
-	private TMP_Text descriptionField;
-	[SerializeField]
-	private Transform textureField;
-
+	[SerializeField] GameObject[] characters;
 	private int currentCharacter = 0;
 
-    // Start is called before the first frame update
-    void Start()
+	private void Awake()
+	{
+		if (!PlayerPrefs.HasKey(_currentCharacterKey))
+			PlayerPrefs.SetInt(_currentCharacterKey, 0);
+		
+	}
+
+	// Start is called before the first frame update
+	void Start()
     {
 		
     }
@@ -27,13 +27,31 @@ public class ChooseCharacterBehaviour : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-		if(currentCharacter >= 0 && currentCharacter < characters.Length)
+
+	}
+
+	public void PrevButton()
+	{
+		if (currentCharacter > 0)
 		{
-			nameField.text = characters[currentCharacter].CharacterName;
-			descriptionField.text = characters[currentCharacter].CharacterDescription;
+			characters[currentCharacter].gameObject.SetActive(false);
+			currentCharacter--;
 			characters[currentCharacter].gameObject.SetActive(true);
-			characters[currentCharacter].gameObject.transform.position = textureField.position;
 		}
 	}
 
+	public void NextButton()
+	{
+		if (currentCharacter < characters.Length)
+		{
+			characters[currentCharacter].gameObject.SetActive(false);
+			currentCharacter++;
+			characters[currentCharacter].gameObject.SetActive(true);
+		}
+	}
+
+	public void ChooseCharacter()
+	{
+		PlayerPrefs.SetInt(_currentCharacterKey, currentCharacter);
+	}
 }
