@@ -1,9 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerInitializer : MonoBehaviour
 {
@@ -17,7 +13,7 @@ public class PlayerInitializer : MonoBehaviour
 	private Animator _playerAnimator;
 
 	[SerializeField]
-	private List<AnimatorController> _personControllers = new List<AnimatorController>();
+	private List<RuntimeAnimatorController> _personControllers = new List<RuntimeAnimatorController>();
 
 	private readonly string _currentCharacterKey = "CharacterKey";
 
