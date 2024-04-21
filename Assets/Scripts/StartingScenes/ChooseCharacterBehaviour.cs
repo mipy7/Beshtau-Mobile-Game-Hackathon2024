@@ -42,7 +42,7 @@ public class ChooseCharacterBehaviour : MonoBehaviour
 
 	public void NextButton()
 	{
-		if (currentCharacter < characters.Length)
+		if (currentCharacter < characters.Length - 1)
 		{
 			characters[currentCharacter].gameObject.SetActive(false);
 			currentCharacter++;
