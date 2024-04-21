@@ -39,7 +39,7 @@ public class DangerZoneController : MonoBehaviour
     {
         if (_isDangerZoneActive)
         {
-            Debug.Log("Damage -");
+            //Debug.Log("Damage -");
             OnDangerZone.Invoke();
         }
         else

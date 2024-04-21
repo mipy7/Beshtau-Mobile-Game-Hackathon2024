@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class RepairEngineController : MonoBehaviour
 {
+    [SerializeField]
+    protected LayerMask _playerMask;
 
-    [SerializeField] private PlayerController _player;
+    private PlayerController _playerController;
 
     private bool _isRepairing = false;
 
@@ -13,22 +15,7 @@ public class RepairEngineController : MonoBehaviour
 
     private float _repairTime = 3f;
 
-    private void Awake()
-    {
-        _player.OnRepair.AddListener(OnRepair);
-    }
-
-    private void OnRepair(bool isRepair)
-    {
-        if (isRepair)
-        {
-            _isCanRepair = true;
-        }
-        else
-        {
-            _isCanRepair = false;
-        }
-    }
+    private bool _hasBeenRepaired = false;
 
     private IEnumerator RepairEngineCoroutine()
     {
@@ -39,17 +26,70 @@ public class RepairEngineController : MonoBehaviour
 
         _isRepairing = true;
 
+        _playerController.IsCanMove = false;
+
         while (_isCanRepair)
         {
+            _isCanRepair = false;
             yield return new WaitForSeconds(_repairTime);
             Repair();
         }
+        
+        _hasBeenRepaired = true;
+
+        GameController gameController = FindObjectOfType<GameController>();
+
+        gameController.IncreaseRepairedEnginesCount();
+
+        Debug.Log("Repair Finish");
+
+        _playerController.IsCanMove = true;
 
         _isRepairing = false;
     }
 
     private void Repair()
     {
+        Debug.Log("is repair");
 
+        if (!_hasBeenRepaired)
+            StartCoroutine(RepairEngineCoroutine());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            int collisionLayer = collision.gameObject.layer;
+
+            if (_playerMask == (1 << collisionLayer))
+            {
+                _isCanRepair = true;
+                
+                if (_playerController == null)
+                    _playerController = collision.gameObject.transform.GetComponent<PlayerController>();
+
+                if (_playerController != null)
+                    _playerController.OnRepair.AddListener(Repair);
+
+                Debug.Log("OnRepair");
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            int collisionLayer = collision.gameObject.layer;
+
+            if (_playerMask == (1 << collisionLayer))
+            {
+                _isCanRepair = false;
+
+                if (_playerController != null)
+                    _playerController.OnRepair.RemoveListener(Repair);
+            }
+        }
     }
 }

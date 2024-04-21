@@ -36,7 +36,7 @@ public class TimeDangerZone : DangerZoneController
 
         _collider.enabled = false;
 
-        Debug.Log("DangerZone UNactive");
+        //Debug.Log("DangerZone UNactive");
 
         yield return new WaitForSeconds(_dangerActiveTime);
 
@@ -44,7 +44,7 @@ public class TimeDangerZone : DangerZoneController
 
         _collider.enabled = true;
         
-        Debug.Log("DangerZone active");
+        //Debug.Log("DangerZone active");
 
         yield return new WaitForSeconds(_dangerActiveTime);
 
