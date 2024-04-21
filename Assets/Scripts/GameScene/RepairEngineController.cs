@@ -56,7 +56,7 @@ public class RepairEngineController : MonoBehaviour
             Repair();
         }
 
-        _animator.SetBool("IsRepair", true);
+        _animator.SetBool("IsRepair", false);
 
         _newSpriteRenderer.sprite = _sprite;
 

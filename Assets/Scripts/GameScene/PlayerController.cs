@@ -77,6 +77,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip(" 0 -> Health bonus \n 1 -> Shield bonus \n 2 -> Score bonus \n 3 -> Finish zone \n 4 -> Heal \n 5 -> Point ")]
     private List<LayerMask> _activityLayers = new List<LayerMask>();
 
+    [SerializeField]
+    private AudioController _audioController;
+
     private void Awake()
     {
         if (TryGetComponent(out Rigidbody2D rb))
@@ -179,13 +182,13 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator HealthCooldownCoroutine()
     {
-        // set cooldown anim flag
+        //_animator.SetBool("IsHeal", true);
 
         _isCanTakeDamage = false;
 
         yield return new WaitForSeconds(_healthCooldownTime);
 
-        // set cooldown anim flag
+        //_animator.SetBool("IsHeal", false);
 
         _isCanTakeDamage = true;
     }
@@ -197,6 +200,7 @@ public class PlayerController : MonoBehaviour
             _health--;
             OnHealthChange.Invoke(_health, _maxHealth);
             StartCoroutine(HealthCooldownCoroutine());
+            _audioController.PlayHitSound();
             Debug.Log("Damage");
         }
 
@@ -231,6 +235,7 @@ public class PlayerController : MonoBehaviour
 
     public void RepairEngine()
     {
+        _audioController.PlayRepairSound();
         OnRepair.Invoke();
         //Debug.Log("Repair Start");
     }
@@ -245,18 +250,21 @@ public class PlayerController : MonoBehaviour
             if (_activityLayers[0] == (1 << collisionLayer))
             {
                 OnHealthBonus.Invoke();
+                _audioController.PlayBonusSound();
                 Destroy(collision.gameObject);
             }
             // Shield bonus
             else if (_activityLayers[1] == (1 << collisionLayer))
             {
                 OnShieldBonus.Invoke();
+                _audioController.PlayBonusSound();
                 Destroy(collision.gameObject);
             }
             // Score bonus
             else if (_activityLayers[2] == (1 << collisionLayer))
             {
                 OnScoreBonus.Invoke();
+                _audioController.PlayBonusSound();
                 Destroy(collision.gameObject);
             }
             // Finish
@@ -268,12 +276,14 @@ public class PlayerController : MonoBehaviour
             else if (_activityLayers[4] == (1 << collisionLayer))
             {
                 IncreaseHealth();
+                _audioController.PlayCompSound();
                 Destroy(collision.gameObject);
             }
             // Point
             else if (_activityLayers[5] == (1 << collisionLayer))
             {
                 IncreasePoints();
+                _audioController.PlayScoreSound();
                 Destroy(collision.gameObject);
             }
         }
