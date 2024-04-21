@@ -11,10 +11,13 @@ public class TimeDangerZone : DangerZoneController
 
     private Collider2D _collider;
 
+    private Animator _animator;
+
     private void Awake()
     {
-        _dangerActiveTime = Random.Range(3, 7);
+        _dangerActiveTime = Random.Range(3, 4);
         _collider = GetComponent<Collider2D>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -36,15 +39,17 @@ public class TimeDangerZone : DangerZoneController
 
         _collider.enabled = false;
 
-        //Debug.Log("DangerZone UNactive");
+        if (_animator != null )
+            _animator.SetBool("IsActive", false);
 
         yield return new WaitForSeconds(_dangerActiveTime);
 
         _isDangerZoneActive = true;
 
         _collider.enabled = true;
-        
-        //Debug.Log("DangerZone active");
+
+        if (_animator != null)
+            _animator.SetBool("IsActive", true);
 
         yield return new WaitForSeconds(_dangerActiveTime);
 

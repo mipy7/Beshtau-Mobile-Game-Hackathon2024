@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -12,6 +13,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private GameObject _losePanel;
+
+    [SerializeField]
+    private TMP_Text _scoreResult;
 
     private int _repairedEngines = 0;
 
@@ -35,6 +39,8 @@ public class GameController : MonoBehaviour
         {
             if (_winPanel != null)
                 _winPanel.SetActive(true);
+
+            _scoreResult.text = "Твой счет: " + _playerController.Score.ToString();
         }
         else
         {

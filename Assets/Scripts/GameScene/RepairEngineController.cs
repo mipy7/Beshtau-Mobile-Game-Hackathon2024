@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RepairEngineController : MonoBehaviour
 {
@@ -8,6 +9,24 @@ public class RepairEngineController : MonoBehaviour
     protected LayerMask _playerMask;
 
     private PlayerController _playerController;
+
+    [SerializeField]
+    private SpriteRenderer _oldSpriteRenderer;
+
+    [SerializeField]
+    private SpriteRenderer _repairKeySpriteRenderer;
+
+    [SerializeField]
+    private SpriteRenderer _textSpriteRenderer;
+
+    [SerializeField]
+    private SpriteRenderer _newSpriteRenderer;
+
+    [SerializeField]
+    private Animator _animator;
+
+    [SerializeField]
+    private Sprite _sprite;
 
     private bool _isRepairing = false;
 
@@ -28,13 +47,25 @@ public class RepairEngineController : MonoBehaviour
 
         _playerController.IsCanMove = false;
 
+        _animator.SetBool("IsRepair", true);
+
         while (_isCanRepair)
         {
             _isCanRepair = false;
             yield return new WaitForSeconds(_repairTime);
             Repair();
         }
-        
+
+        _animator.SetBool("IsRepair", true);
+
+        _newSpriteRenderer.sprite = _sprite;
+
+        _oldSpriteRenderer.sprite = null;
+
+        _repairKeySpriteRenderer.sprite = null;
+
+        _textSpriteRenderer.sprite = null;
+
         _hasBeenRepaired = true;
 
         GameController gameController = FindObjectOfType<GameController>();

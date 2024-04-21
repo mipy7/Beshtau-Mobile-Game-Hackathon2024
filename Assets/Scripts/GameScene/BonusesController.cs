@@ -11,6 +11,12 @@ public class BonusesController : MonoBehaviour
 
     private float _timer = 30f;
 
+    [SerializeField]
+    private GameObject _shieldBonusCounter;
+
+    [SerializeField]
+    private GameObject _scoreBonusCounter;
+
     private void Awake()
     {
         if (TryGetComponent(out PlayerController player))
@@ -54,7 +60,11 @@ public class BonusesController : MonoBehaviour
         
         _player.IsShieldBonusActive = true;
 
+        _shieldBonusCounter.SetActive(true);
+
         yield return new WaitForSeconds(_timer);
+
+        _shieldBonusCounter.SetActive(false);
 
         _player.IsShieldBonusActive = false;
         
@@ -67,7 +77,11 @@ public class BonusesController : MonoBehaviour
 
         _player.IsScoreBonusActive = true;
 
+        _scoreBonusCounter.SetActive(true);
+
         yield return new WaitForSeconds(_timer);
+
+        _scoreBonusCounter.SetActive(false);
 
         _player.IsScoreBonusActive = false;
 

@@ -17,6 +17,7 @@ public class GroundedController : MonoBehaviour
 
             if (_groundLayer == (1 << collisionLayer))
             {
+                _player.EndJump();
                 _player.IsJumping = false;
             }
         }

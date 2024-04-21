@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _rb;
 
-    private CapsuleCollider2D _collider;
+    private Animator _animator;
+
+    private SpriteRenderer _spriteRenderer;
 
     [SerializeField] private float _speed = 100f;
 
@@ -86,13 +88,22 @@ public class PlayerController : MonoBehaviour
             new NullReferenceException("Check Player RigidBody!");
         }
 
-        if (TryGetComponent(out CapsuleCollider2D collider))
+        if (TryGetComponent(out Animator animator))
         {
-            _collider = collider;
+            _animator = animator;
         }
         else
         {
-            new NullReferenceException("Check Player Collider!");
+            new NullReferenceException("Check Player Animator!");
+        }
+
+        if (TryGetComponent(out SpriteRenderer spriteRenderer))
+        {
+            _spriteRenderer = spriteRenderer;
+        }
+        else
+        {
+            new NullReferenceException("Check Player Animator!");
         }
     }
 
@@ -104,6 +115,9 @@ public class PlayerController : MonoBehaviour
         {
             zone.OnDangerZone.AddListener(DecreaseHealth);
         }
+
+        _animator.SetBool("IsWalk", false);
+        _animator.SetBool("IsJump", false);
     }
 
     private void FixedUpdate()
@@ -113,10 +127,12 @@ public class PlayerController : MonoBehaviour
             switch (_moveDirection)
             {
                 case MoveDirection.Left:
+                    _spriteRenderer.flipX = true;
                     MovePlayer(-1);
                     break;
                 
                 case MoveDirection.Right:
+                    _spriteRenderer.flipX = false;
                     MovePlayer(1);
                     break;
 
@@ -129,6 +145,9 @@ public class PlayerController : MonoBehaviour
     private void MovePlayer(int moveDir)
     {
         _rb.velocity = new Vector2(moveDir * Time.deltaTime * _speed, _rb.velocity.y);
+
+        if (_animator.GetBool("IsWalk") == false && _animator.GetBool("IsJump") == false)
+            _animator.SetBool("IsWalk", true);
     }
 
     public void Jump()
@@ -137,13 +156,25 @@ public class PlayerController : MonoBehaviour
         {
             _isJumping = true;
 			_rb.AddForce(Vector2.up * _jumpDuration, ForceMode2D.Impulse);
+
+            _animator.SetBool("IsWalk", false);
+            _animator.SetBool("IsJump", true);
         }
+    }
+
+    public void EndJump()
+    {
+        _animator.SetBool("IsJump", false);
     }
 
     public void ChangeMoveSide(int moveDirection)
     {
         _moveDirection = (MoveDirection)moveDirection;
         _rb.velocity *= Vector2.up;
+
+        if (_moveDirection == MoveDirection.None && _animator.GetBool("IsJump") == false)
+            _animator.SetBool("IsWalk", false);
+                
     }
 
     private IEnumerator HealthCooldownCoroutine()
