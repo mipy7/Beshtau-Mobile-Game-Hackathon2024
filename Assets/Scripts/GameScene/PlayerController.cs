@@ -135,8 +135,8 @@ public class PlayerController : MonoBehaviour
     {
         if (_isCanMove && !_isJumping)
         {
-            _rb.AddForce(Vector2.up * _jumpDuration, ForceMode2D.Impulse);
             _isJumping = true;
+			_rb.AddForce(Vector2.up * _jumpDuration, ForceMode2D.Impulse);
         }
     }
 
